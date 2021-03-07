@@ -1,0 +1,6 @@
+Title(planning) : "GHOST in the Maze", idea from "Ghost in the Mist" by Lacuna Coil
+
+1. Check for remaining life. (Disable SIGINT)
+	- Disable entry if the player has no life remaining, forcing to restart the game.
+	- Enable entry if the player has any life, or (s)he decided to restart it, calling 'install.sh'
+2.  

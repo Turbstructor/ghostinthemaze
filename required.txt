@@ -1,0 +1,5 @@
+- Dockerfile :
+    - Install required packages.
+    - Make user 'manager' and 'player'.
+    - Make 'playerA' to 'playerE'.
+    - Run initializations for each player.
