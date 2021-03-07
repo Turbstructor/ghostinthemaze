@@ -93,5 +93,12 @@ RUN set -xe && git clone https://github.com/slimm609/checksec.sh .checksec && su
 # RUN usermod -p $(openssl passwd -crypt $(echo "deadbeef")) manager
 # RUN usermod -G users player
 
+RUN set -xe \
+    && usermod -G users playerA \
+    && usermod -G users playerB \
+    && usermod -G users playerC \
+    && usermod -G users playerD \
+    && usermod -G users playerE
+
 USER player
 CMD ["zsh"]
