@@ -74,7 +74,8 @@ RUN sudo ./initialize.sh
 # USER sectorA
 # WORKDIR /home/sectorA
 
-# COPY --chown=sectorA:users programmerbase .
+# RUN mkdir programmerbase
+# COPY --chown=sectorA:users programmerbase programmerbase/
 # RUN cd programmerbase && sudo ./initialize.sh
 # RUN rm -rf programmerbase
 
@@ -82,7 +83,8 @@ RUN sudo ./initialize.sh
 # USER sectorB
 # WORKDIR /home/sectorB
 
-# COPY --chown=sectorB:users machinelearning .
+# RUN mkdir machinelearning
+# COPY --chown=sectorB:users machinelearning machinelearning/
 # RUN cd machinelearning && sudo ./initialize.sh
 # RUN rm -rf machinelearning
 
@@ -96,12 +98,13 @@ RUN cd algorithm && sudo ./initialize.sh
 RUN rm -rf algorithm
 
 
-# USER sectorD
-# WORKDIR /home/sectorD
+USER sectorD
+WORKDIR /home/sectorD
 
-# COPY --chown=sectorD:users network .
-# RUN cd network && sudo ./initialize.sh
-# RUN rm -rf network
+RUN mkdir network
+COPY --chown=sectorD:users network network/
+RUN cd network && sudo ./initialize.sh
+RUN rm -rf network
 
 
 # USER sectorE
