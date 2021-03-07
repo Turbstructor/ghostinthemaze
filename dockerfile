@@ -32,12 +32,6 @@ RUN set -xe \
     && useradd -m -g users -G sudo -s $(which zsh) manager && passwd -d manager \
     && useradd -m -g users -G sudo -s $(which zsh) player && passwd -d player
 
-RUN set -xe && useradd -m -g users -G sudo -s $(which zsh) sectorA && passwd -d sectorA && \
-    useradd -m -g users -G sudo -s $(which zsh) sectorB && passwd -d sectorB && \
-    useradd -m -g users -G sudo -s $(which zsh) sectorC && passwd -d sectorC && \
-    useradd -m -g users -G sudo -s $(which zsh) sectorD && passwd -d sectorD && \
-    useradd -m -g users -G sudo -s $(which zsh) sectorE && passwd -d sectorE
-
 USER manager
 WORKDIR /home/manager/
 
@@ -51,13 +45,14 @@ RUN sudo chsh -s $(which zsh)
 ADD --chown=manager:users base/classyTouch.zsh-theme ./.oh-my-zsh/custom/themes/classyTouch_oh-my-zsh/classyTouch.zsh-theme
 ADD --chown=manager:users base/.zshrc .
 
+
 # Install Pwndbg
 RUN set -xe && git clone https://github.com/pwndbg/pwndbg .pwndbg && cd .pwndbg && ./setup.sh
 
 # Install Splitmind-Tmux for Pwndbg
 RUN set -xe && git clone https://github.com/jerdna-regeiz/splitmind .splitmind
-ADD --chown=manager:users .gdbinit .
-ADD --chown=manager:users .tmux.conf .
+# ADD --chown=manager:users base/.gdbinit . # Should be done in security stage.
+ADD --chown=manager:users base/.tmux.conf .
 
 # Install pwntools via pip
 RUN sudo pip3 install pwntools
@@ -66,6 +61,14 @@ ENV PATH="/usr/local/lib/python3.8/dist-packages/bin:$PATH"
 
 # Install checksec
 RUN set -xe && git clone https://github.com/slimm609/checksec.sh .checksec && sudo ln -sf ~/.checksec/checksec /usr/bin/checksec
+
+
+# Initialize player and every sectors
+RUN sudo cp .zshrc /home/player/ && sudo chown player:users /home/player/.zshrc
+RUN sudo cp .tmux.conf /home/player/ && sudo chown player:users /home/player/.tmux.conf
+
+ADD --chown=manager:users initialize.sh .
+RUN sudo ./initialize.sh
 
 # Initialize every sectors with shell scripts
 # USER sectorA
@@ -87,7 +90,8 @@ RUN set -xe && git clone https://github.com/slimm609/checksec.sh .checksec && su
 USER sectorC
 WORKDIR /home/sectorC
 
-COPY --chown=sectorC:users algorithm .
+RUN mkdir algorithm
+COPY --chown=sectorC:users algorithm algorithm/
 RUN cd algorithm && sudo ./initialize.sh
 RUN rm -rf algorithm
 
@@ -131,6 +135,7 @@ RUN rm -rf algorithm
 # RUN usermod -p $(openssl passwd -crypt $(echo "deadbeef")) manager
 # RUN usermod -G users player
 
+USER root
 RUN set -xe \
     && usermod -G users sectorA \
     && usermod -G users sectorB \
@@ -141,4 +146,5 @@ RUN set -xe \
 RUN chmod 711 /home/manager
 
 USER player
+WORKDIR "/home/player"
 CMD ["zsh"]

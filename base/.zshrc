@@ -6,7 +6,7 @@ export LC_ALL='en_US.UTF-8'
 export TERM=xterm
 
 ##### Zsh/Oh-my-Zsh Configuration
-export ZSH="/home/player/.oh-my-zsh"
+export ZSH="/home/manager/.oh-my-zsh"
 
 ZSH_THEME="classyTouch_oh-my-zsh/classyTouch"
 plugins=()
