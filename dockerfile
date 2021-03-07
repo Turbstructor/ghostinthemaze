@@ -71,13 +71,13 @@ ADD --chown=manager:users initialize.sh .
 RUN sudo ./initialize.sh
 
 # Initialize every sectors with shell scripts
-# USER sectorA
-# WORKDIR /home/sectorA
+USER sectorA
+WORKDIR /home/sectorA
 
-# RUN mkdir programmerbase
-# COPY --chown=sectorA:users programmerbase programmerbase/
-# RUN cd programmerbase && sudo ./initialize.sh
-# RUN rm -rf programmerbase
+RUN mkdir programmerbase
+COPY --chown=sectorA:users programmerbase programmerbase/
+RUN cd programmerbase && sudo ./initialize.sh
+RUN rm -rf programmerbase
 
 
 # USER sectorB
