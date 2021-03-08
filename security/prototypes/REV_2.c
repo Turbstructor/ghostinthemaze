@@ -14,19 +14,14 @@
 #define UID 0
 #define GID 0
 
-#define KEY_A 11
-#define KEY_B 22
-#define KEY_C 3333
-#define KEY_D 4444
-#define KEY_E 55555555
-#define KEY_F 66666666
+#define KEY 0x0
 
-#define XOR_A 0b1010101010101010
-#define XOR_B 0b0101010101010101
-#define XOR_C 0b1100110011001100
-#define XOR_D 0b0011001100110011
-#define XOR_E 0b1111000011110000
-#define XOR_F 0b0000111100001111
+#define XOR_A 0b10101010101010101010101010101010
+#define XOR_B 0b01010101010101010101010101010101
+#define XOR_C 0b11001100110011001100110011001100
+#define XOR_D 0b00110011001100110011001100110011
+#define XOR_E 0b11110000111100001111000011110000
+#define XOR_F 0b00001111000011110000111100001111
 
 // NX bit on, Canary enabled
 
@@ -52,7 +47,7 @@ void penetrate()
 	xe = e ^ XOR_E;
 	xf = f ^ XOR_F;
 
-	if(xa == KEY_A && xb == KEY_B && xc == KEY_C && xd == KEY_D && xe == KEY_E && xf == KEY_F)
+	if(xa == KEY && xb == KEY && xc == KEY && xd == KEY && xe == KEY && xf == KEY)
 	{
 		fprintf(stdout, G "> You made it!" N "\n");
 

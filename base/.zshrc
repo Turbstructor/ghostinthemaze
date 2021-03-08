@@ -1,4 +1,5 @@
 export ZSH_DISABLE_COMPFIX=true
+export PATH="/usr/local/lib/python3.8/dist-packages/bin:$PATH"
 
 export LANG='en_US.UTF-8'
 export LANGUAGE='en_US:en'

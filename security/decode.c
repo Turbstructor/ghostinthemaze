@@ -41,12 +41,12 @@ int main()
 	// Check for password files
 	for(i = 1; i <= 5; i++)
 	{
-		sprintf(filename, "/home/room%d/slot%d.key", i, i);
+		sprintf(filename, "/home/roomE%d/slot%d.key", i, i);
 		fp = fopen(filename, "r");
 
 		if(fp == NULL)
 		{
-			fprintf(stderr, R "Error: failed to read file room%d.pw" N "\n", i);
+			fprintf(stderr, R "Error: failed to read file %s" N "\n", filename);
 			exit(3);
 		}
 		
@@ -75,7 +75,7 @@ int main()
 		fprintf(stderr, LR "The lock has been completely engaged; you cannot try to disable it anymore.\n");
 		fprintf(stderr, "All saved data will be lost, passwords will be changed and you have to restart this program." N "\n");
 
-		system("./.initialize.sh");
+		system("./re-initialize.sh");
 		exit(127);
 	}
 

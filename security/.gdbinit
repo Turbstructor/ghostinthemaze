@@ -1,5 +1,5 @@
-source /home/player/.pwndbg/gdbinit.py
-source /home/player/.splitmind/gdbinit.py
+source /home/manager/.pwndbg/gdbinit.py
+source /home/manager/.splitmind/gdbinit.py
 
 python
 import splitmind

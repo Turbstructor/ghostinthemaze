@@ -13,17 +13,17 @@
 #define LR "\e[91m"
 #define LG "\e[92m"
 
-// Maximum 16 hexadecimal digits for KEY
-#define KEY 0x9a93ce6d97
+// Maximum 8 hexadecimal digits for KEY
+#define KEY 0x0
 
 // NX bit on, Canary enabled
 
 void penetrate()
 {
-	long long target;
+	int target;
 
 	fprintf(stdout, "Enter a number to get hint : ");
-	fscanf(stdin, "%lld", &target);
+	fscanf(stdin, "%d", &target);
 
 	if(target == KEY)
 	{

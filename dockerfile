@@ -51,13 +51,12 @@ RUN set -xe && git clone https://github.com/pwndbg/pwndbg .pwndbg && cd .pwndbg 
 
 # Install Splitmind-Tmux for Pwndbg
 RUN set -xe && git clone https://github.com/jerdna-regeiz/splitmind .splitmind
-# ADD --chown=manager:users base/.gdbinit . # Should be done in security stage.
 ADD --chown=manager:users base/.tmux.conf .
 
 # Install pwntools via pip
 RUN sudo pip3 install pwntools
 
-ENV PATH="/usr/local/lib/python3.8/dist-packages/bin:$PATH"
+# ENV PATH="/usr/local/lib/python3.8/dist-packages/bin:$PATH"
 
 # Install checksec
 RUN set -xe && git clone https://github.com/slimm609/checksec.sh .checksec && sudo ln -sf ~/.checksec/checksec /usr/bin/checksec
@@ -107,11 +106,15 @@ RUN cd network && sudo ./initialize.sh
 RUN rm -rf network
 
 
-# USER sectorE
-# WORKDIR /home/sectorE
+USER root
+WORKDIR /home/manager
 
-# COPY --chown=sectorE:users security .
-# RUN cd security && sudo ./initialize.sh
+ADD --chown=manager:users security/.gdbinit .
+
+RUN mkdir security
+COPY --chown=manager:users security security/
+RUN cd security && ./initialize.sh
+RUN cd security && ./re-initialize.sh
 
 # Configure security phase
 

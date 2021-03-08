@@ -16,14 +16,14 @@
 
 #define BUF_SIZE 64
 
-#define KEY 0x9a93ce6d97
+#define KEY 0x0
 
 // NX bit on, Canary disabled
 
 void penetrate()
 {
 	char target[BUF_SIZE];
-	long long hans;
+	int hans;
 
 	fprintf(stdout, "Tell me something... : ");
 	gets(target);

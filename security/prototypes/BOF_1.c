@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     for(; i <= 5; i++)
     {
-        sprintf(filename, "/home/roomE%d/slot%d.key", i), i;
+        sprintf(filename, "/home/roomE%d/slot%d.key", i, i);
         fp = fopen(filename, "r");
 
         if(fp == NULL) break;

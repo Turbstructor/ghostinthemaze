@@ -15,24 +15,24 @@
 #define LG "\e[92m"
 
 #define MAX_BUFFER_SIZE 32
-const char* KEY = "deadbeef";
-#define ANOTHER_KEY 0x8f2beefa1067
+const char* STR_KEY = "deadbeef";
+#define KEY 0x0
 
 // NX bit on, Canary disabled
 
 void penetrate()
 {
 	char target[MAX_BUFFER_SIZE];
-	long long another_target;
+	int another_target;
 
     fprintf(stdout, "Enter password to acquire hint : ");
 	gets(target);
 
-	if(!strcmp(target, KEY))
+	if(!strcmp(target, STR_KEY))
 	{
         fprintf(stdout, G "> Your answer matches with the password given!" N "\n");
 
-        if(another_target == ANOTHER_KEY)
+        if(another_target == KEY)
         {
             fprintf(stdout, G "> Second authentication successfully done." N "\n");
             
