@@ -18,7 +18,7 @@ int main()
 {
 	int menu;
 	char password[6][33];
-	char filename[33];
+	char filename[65];
 
 	int is_unlocked[6] = {1, 1, 1, 1, 1, 1};
 	int lock_status = 0;
@@ -41,7 +41,7 @@ int main()
 	// Check for password files
 	for(i = 1; i <= 5; i++)
 	{
-		sprintf(filename, "/home/roomE%d/slot%d.key", i, i);
+		sprintf(filename, "/home/sectorE/roomE%d/slot%d.key", i, i);
 		fp = fopen(filename, "r");
 
 		if(fp == NULL)
