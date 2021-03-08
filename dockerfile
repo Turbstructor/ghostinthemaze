@@ -161,6 +161,9 @@ ADD --chown=root:root decode_main.c .
 RUN gcc -o decode_main decode_main.c && chown root:root decode_main && chmod 6755 decode_main
 RUN rm decode_main.c
 RUN echo "0 0 0 0 0" > ".lock_slots"
+ADD --chown=root:root readme.md_final Readme.md
+RUN echo "clear" >> .zshrc
+RUN echo "cat Readme.md" >> .zshrc
 
 USER player
 WORKDIR "/home/player"
