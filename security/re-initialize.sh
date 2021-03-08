@@ -84,12 +84,12 @@ do
 	if [ $lines[3] = 0 ]; then
 		CANARY="no-stack-protector"
 	else
-		CANARY="stack-protector"
+		CANARY="stack-protector-all"
 	fi
 
 
 	echo '#!/bin/zsh' > "/home/$ROOM_NAME/instructions"
-	echo 'cat readme.md' >> "/home/$ROOM_NAME/instructions"
+	echo 'clear; cat readme.md' >> "/home/$ROOM_NAME/instructions"
 	chmod +x "/home/$ROOM_NAME/instructions"
 
 	echo "$ASLR" > "/home/$ROOM_NAME/.aslr"
@@ -99,6 +99,8 @@ do
 	# chmod 6755 "/home/$ROOM_NAME/.set_aslr"
 	# chmod 6755 "/home/$ROOM_NAME/.reset_aslr"
 
+    cp "${FILENAMES[$number]}_readme.md" "/home/$ROOM_NAME/readme.md"
+
 	echo "#!/bin/zsh" > "/home/$ROOM_NAME/.zlogin"
 	echo "/home/manager/.set_aslr > /dev/null" >> "/home/$ROOM_NAME/.zlogin"
 	echo "./instructions" >> "/home/$ROOM_NAME/.zlogin"
@@ -106,7 +108,12 @@ do
 	echo "#!/bin/zsh" > "/home/$ROOM_NAME/.zlogout"
 	echo "/home/manager/.reset_aslr > /dev/null" >> "/home/$ROOM_NAME/.zlogout"
 
-	gcc -f$CANARY -z $NX -o "/home/$ROOM_NAME/SAFE" "/home/$ROOM_NAME/$FILENAME.c"
+	gcc -f"$CANARY" -z $NX -o "/home/$ROOM_NAME/SAFE" "/home/$ROOM_NAME/$FILENAME.c"
+
+    if [ $number -le 3 ]; then
+        rm "/home/$ROOM_NAME/$FILENAME.c"
+    fi
+
 	chown "$SAFE_NAME":"$GROUP_NAME" "/home/$ROOM_NAME/SAFE"
 	chmod 6755 "/home/$ROOM_NAME/SAFE"
 done
