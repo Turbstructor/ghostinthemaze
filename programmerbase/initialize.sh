@@ -5,7 +5,7 @@ local ROOM_NAME="programmerbase"
 local GROUP_NAME="sector$SECTOR"
 
 groupadd $GROUP_NAME
-useradd -g $GROUP_NAME -s /bin/bash $ROOM_NAME && passwd -d $ROOM_NAME
+useradd -g $GROUP_NAME -s /bin/bash -p $(openssl passwd -crypt $(echo "7")) $ROOM_NAME
 
 for number in 1 2 3 4 5 6 7 8 9
 do

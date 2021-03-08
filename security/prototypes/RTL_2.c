@@ -1,6 +1,7 @@
 // AFTER => bof10.c
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #define UID 0

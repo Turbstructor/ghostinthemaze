@@ -11,13 +11,17 @@ for number in 1 2 3 4 5
 do
     ROOM_NAME="room$SECTOR$number"
 
-    useradd -m -g "$GROUP_NAME" -s $(which zsh) -p $(openssl passwd -crypt $(echo "$PASSWORD[$number]")) "$ROOM_NAME"
-    cp "p$number"/* "p$number/".* "/home/$ROOM_NAME/"
-    cp "../.tmux.conf" "../.zshrc" "/home/$ROOM_NAME/"
+    mkdir -p "/home/$GROUP_NAME/$ROOM_NAME"
 
-    chown "$ROOM_NAME":"$GROUP_NAME" "/home/$ROOM_NAME/p$number.cpp"
+    useradd -d "/home/$GROUP_NAME/$ROOM_NAME" -g "$GROUP_NAME" -s $(which zsh) -p $(openssl passwd -crypt $(echo "$PASSWORD[$number]")) "$ROOM_NAME"
+    chown $ROOM_NAME:$GROUP_NAME "/home/$GROUP_NAME/$ROOM_NAME"
+    
+    cp "p$number"/* "p$number/".* "/home/$GROUP_NAME/$ROOM_NAME"
+    cp "../.tmux.conf" "../.zshrc" "/home/$GROUP_NAME/$ROOM_NAME"
 
-    chmod o-rx "/home/$ROOM_NAME"
+    chown "$ROOM_NAME":"$GROUP_NAME" "/home/$GROUP_NAME/$ROOM_NAME/p$number.cpp"
+
+    chmod o-rx "/home/$GROUP_NAME/$ROOM_NAME"
 done
 
 passwd -d "room$SECTOR""1"

@@ -79,13 +79,13 @@ RUN cd programmerbase && sudo ./initialize.sh
 RUN rm -rf programmerbase
 
 
-# USER sectorB
-# WORKDIR /home/sectorB
+USER sectorB
+WORKDIR /home/sectorB
 
-# RUN mkdir machinelearning
-# COPY --chown=sectorB:users machinelearning machinelearning/
-# RUN cd machinelearning && sudo ./initialize.sh
-# RUN rm -rf machinelearning
+RUN mkdir machinelearning
+COPY --chown=sectorB:users machinelearning machinelearning/
+RUN cd machinelearning && sudo ./initialize.sh
+RUN rm -rf machinelearning
 
 
 USER sectorC
@@ -139,7 +139,6 @@ RUN cd security && ./re-initialize.sh
 
 # USER root
 # RUN usermod -p $(openssl passwd -crypt $(echo "deadbeef")) manager
-# RUN usermod -G users player
 
 USER root
 RUN set -xe \
@@ -147,9 +146,21 @@ RUN set -xe \
     && usermod -G users sectorB \
     && usermod -G users sectorC \
     && usermod -G users sectorD \
-    && usermod -G users sectorE
+    && usermod -G users sectorE \
+    && usermod -G users player
 
 RUN chmod 711 /home/manager
+RUN usermod -p $(openssl passwd -crypt $(echo "deadbeef")) manager
+
+RUN useradd -m -g users -s $(which zsh) -p $(openssl passwd -crypt $(echo "password")) outside
+ADD --chown=root:root .zshrc_final /home/outside/.zshrc
+ADD --chown=root:root readme.md_final /home/outside/Readme.md
+
+WORKDIR "/home/player/"
+ADD --chown=root:root decode_main.c .
+RUN gcc -o decode_main decode_main.c && chown root:root decode_main && chmod 6755 decode_main
+RUN rm decode_main.c
+RUN echo "0 0 0 0 0" > ".lock_slots"
 
 USER player
 WORKDIR "/home/player"

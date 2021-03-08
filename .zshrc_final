@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+clear
+
+echo "\e[92m$(head -n 5 ~/Readme.md)"
+echo "\e[39m$(tail -n 34 ~/Readme.md)"
+
+cd ..
